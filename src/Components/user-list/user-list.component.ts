@@ -1,16 +1,18 @@
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { DataService } from '../../Services/data.service';
 import { Router } from '@angular/router';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, SpinnerComponent, NgIf],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })
 export class UserListComponent {
+  IsLoading: boolean = false;
   users: any[] = [];
   filteredUsers: any[] = [];
   paginatedUsers: any[] = [];
@@ -23,14 +25,17 @@ export class UserListComponent {
   }
 
   getUsers(): void {
+    this.IsLoading = true;
     this.dataService.getUsers(this.currentPage).subscribe({
       next: (data: any) => {
+        this.IsLoading = false;
         this.users = data.data;
         this.filteredUsers = this.users;
         this.totalPages = data.total_pages;
         this.paginatedUsers = this.users;
       },
       error: (error: any) => {
+        this.IsLoading = false;
         console.error('Error fetching users:', error);
       },
     });
@@ -38,13 +43,6 @@ export class UserListComponent {
 
   navigateToUser(id: number): void {
     this.router.navigate(['/user', id]);
-  }
-
-  searchUsers(event: any): void {
-    let id = event.target.value;
-    this.filteredUsers = this.users.filter((user) =>
-      user.id.toString().includes(id)
-    );
   }
 
   nextPage(): void {

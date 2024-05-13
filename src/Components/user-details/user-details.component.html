@@ -1,4 +1,7 @@
-<div class="container">
+<div *ngIf="IsLoading" class="d-flex justify-content-center align-items-center " style="height: 100vh;">
+    <app-spinner></app-spinner>
+</div>
+<div *ngIf="!IsLoading" class="container">
     <div class="row">
         <div class="col-6">
             <img [src]="user.avatar" class="w-75" alt="">

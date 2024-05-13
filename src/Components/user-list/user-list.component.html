@@ -1,7 +1,9 @@
 <!-- y -->
 
-
-<div class="container">
+<div *ngIf="IsLoading" class="d-flex justify-content-center align-items-center " style="height: 100vh;">
+    <app-spinner></app-spinner>
+</div>
+<div class="container" *ngIf="!IsLoading">
     <div class="row justify-content-center">
         @for (user of paginatedUsers; track user.id) {
 
@@ -28,4 +30,4 @@
     <button class="pagination-btn" [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
     <span class="pagination-info">{{ currentPage }} / {{ totalPages }}</span>
     <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
-  </div>
+</div>
