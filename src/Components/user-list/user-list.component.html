@@ -1,0 +1,31 @@
+<!-- y -->
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        @for (user of paginatedUsers; track user.id) {
+
+        <div class="card shadow col-12 col-md-3 col-lg-3 m-2 mt-5 border border-2">
+            <div class="user text-center mb-5">
+                <div class="profile">
+                    <img [src]="user.avatar" class="rounded-circle" />
+                </div>
+            </div>
+            <div class="mt-5 text-center">
+                <h4 class="mb-0">{{ user.first_name + " " + user.last_name }}</h4>
+                <span class="text-muted d-block mb-2">{{ user.email }}</span>
+                <span class="text-muted d-block mb-2"> id : {{ user.id }}</span>
+                <button class="Details" (click)="navigateToUser(user.id)">
+                    Details
+                </button>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<div class="pagination">
+    <button class="pagination-btn" [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
+    <span class="pagination-info">{{ currentPage }} / {{ totalPages }}</span>
+    <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+  </div>
